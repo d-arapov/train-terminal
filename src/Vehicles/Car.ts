@@ -8,10 +8,17 @@ export default class Car extends Vehicle {
 
     getTicketPrice() { return 50; }
 
-    refuelOrRecharge() {
+    refuelGas(): void {
         if (this.gasLevel < 10) {
-            console.log("Refueling car...");
+            console.log("Refueling car gas...");
             this.gasLevel = 100;
+        }
+    }
+    
+    chargeBattery(): void {
+        if (this.batteryLevel < 10) {
+            console.log("Recharging car battery...");
+            this.batteryLevel = 100;
         }
     }
 }

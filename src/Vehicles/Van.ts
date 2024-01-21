@@ -8,10 +8,17 @@ export default class Van extends Vehicle {
 
     getTicketPrice() { return 80; }
 
-    refuelOrRecharge() {
+    refuelGas(): void {
         if (this.gasLevel < 10) {
-            console.log("Refueling van...");
+            console.log("Refueling van gas...");
             this.gasLevel = 100;
+        }
+    }
+    
+    chargeBattery(): void {
+        if (this.batteryLevel < 10) {
+            console.log("Recharging van battery...");
+            this.batteryLevel = 100;
         }
     }
 }
