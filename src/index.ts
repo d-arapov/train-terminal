@@ -48,7 +48,7 @@ const employeeMenu = (commandHandler: CommandHandler) => {
 
 const mainMenu = (commandHandler: CommandHandler) => {
     log(chalk.bgBlue(`\n--- Terminal ${commandHandler.getTerminal().getLocation()} - Management ---`));
-    log(chalk.blue("1. Add Train\n2. Park Vehicle\n3. Calculate Revenue\n4. Employee Options\n99. Exit"));
+    log(chalk.blue("1. Add Train\n2. Park Vehicle\n3. Calculate Revenue\n4. Employee Options\n5. Exit"));
 
     commandHandler.askQuestion("Choose an action: ").then(choice => {
         switch (choice) {
@@ -65,6 +65,9 @@ const mainMenu = (commandHandler: CommandHandler) => {
             case '4':
                 commandHandler.getAllEmployees();
                 employeeMenu(commandHandler);
+                break;
+            case '5':
+                commandHandler.close();
                 break;
             default:
                 log(chalk.bgRed("Invalid choice, please try again."));
