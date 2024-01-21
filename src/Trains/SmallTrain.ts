@@ -1,3 +1,4 @@
+import { log } from "console";
 import Vehicle from "../Vehicles/Vehicle.js";
 import Train from "./Train.js";
 
@@ -8,7 +9,17 @@ export default class SmallTrain extends Train {
             this.vehicles.push(vehicle);
             return true;
         }
-        console.log("Small train is full.");
+        log("Small train is full.");
         return false;
+    }
+
+    toString(): string {
+        return `
+   O O o o o...  _______  _______ 
+   O     ____   |       ||       |   
+  ][_n_i_| (    |       ||       |   
+ (__________|_[_|_______||_______|
+   0--0--0        0   0    0   0  
+   `
     }
 }

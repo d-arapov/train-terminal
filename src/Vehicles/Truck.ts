@@ -1,6 +1,8 @@
 import Vehicle from "./Vehicle.js";
+import Refuelable from "../Refuelable/Refuelable.js";
+import log from "../logger.js";
 
-export default class Truck extends Vehicle {
+export default class Truck extends Vehicle implements Refuelable {
 
     constructor() {
         super(Math.random() * 100, Math.random() * 100);
@@ -10,14 +12,14 @@ export default class Truck extends Vehicle {
 
     refuelGas(): void {
         if (this.gasLevel < 10) {
-            console.log("Refueling truck gas...");
+            log("Refueling truck gas...");
             this.gasLevel = 100;
         }
     }
     
     chargeBattery(): void {
         if (this.batteryLevel < 10) {
-            console.log("Recharging truck battery...");
+            log("Recharging truck battery...");
             this.batteryLevel = 100;
         }
     }

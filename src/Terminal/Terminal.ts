@@ -1,8 +1,7 @@
 import chalk from 'chalk';
 import Employee from '../Employee/Employee.js';
 import Train from "../Trains/Train.js";
-
-const log = console.log;
+import log from '../logger.js';
 
 export default class Terminal {
 
@@ -42,17 +41,21 @@ export default class Terminal {
     removeEmployee(index: number): void {
         if (index >= 0 && index < this.employees.length) {
             this.employees.splice(index, 1);
-            console.log(chalk.green(`Employee at index ${index + 1} removed successfully.`));
+            log(`Employee at index ${index + 1} removed successfully.`);
         } else {
-            console.log(chalk.red("Invalid employee index."));
+            log("Invalid employee index.", 'red');
         }
     }
 
     logAllEmployees(): void {
-        log(chalk.bgGreen("Employees:"));
+        log("Employees:", 'bgGreen');
         this.employees.forEach((employee, index) => {
-            log(chalk.green(`Employee ${index + 1}:`, employee.toString()));
+            log(`Employee ${index + 1}: ${employee.toString()}`);
         });
+    }
+
+    toString(): string {
+        return  '-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-';
     }
 
 }

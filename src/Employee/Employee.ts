@@ -1,3 +1,4 @@
+import log from '../logger.js';
 import Train from '../Trains/Train.js';
 import Vehicle from '../Vehicles/Vehicle.js';
 
@@ -14,12 +15,12 @@ export default class Employee {
     parkVehicle(vehicle: Vehicle, train: Train): boolean {
         let success = train.addVehicle(vehicle);
         if (success) {
-            console.log(`Vehicle parked in ${train.constructor.name}.`);
+            log(`Vehicle parked in ${train.constructor.name}.`);
             // vehicle.refuelOrRecharge();
-            console.log(`Current vehicle gas level: ${vehicle.gasLevel}%`);
-            console.log(`Current vehicle battery level: ${vehicle.batteryLevel}%`);
+            log(`Current vehicle gas level: ${vehicle.gasLevel}%`);
+            log(`Current vehicle battery level: ${vehicle.batteryLevel}%`);
         } else {
-            console.log("Failed to park vehicle: Train is full.");
+            log("Failed to park vehicle: Train is full.");
         }
         return success;
     }
@@ -33,6 +34,10 @@ export default class Employee {
     }
 
     toString(): string {
-        return `Name: ${this.name}, Salary Percentage: ${this.salaryPercentage}%`;
+        return `
+         o
+        /|\\ ${this.name}, Salary Percentage: ${this.salaryPercentage}%
+        / \\
+        `
     }
 }

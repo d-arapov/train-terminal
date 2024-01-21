@@ -10,8 +10,7 @@ import Vehicle from '../Vehicles/Vehicle.js';
 import readline from 'readline';
 import chalk from 'chalk';
 import Employee from '../Employee/Employee.js';
-
-const log = console.log
+import log from '../logger.js';
 
 export default class CommandHandler {
     private terminal: Terminal;
@@ -29,9 +28,37 @@ export default class CommandHandler {
         return this.terminal;
     }
 
+    async askQuestion(query: string): Promise<string> {
+        return new Promise(resolve => {
+            this.rl.question(chalk.green(query), (input) => resolve(input));
+        });
+    }
+
     async addTrainInteractive(): Promise<void> {
         const trainType = await this.askQuestion("Enter train type (small/large): ");
-        this.addTrain(trainType);
+        const trainID = await this.askQuestion("Enter train ID: ");
+        this.addTrain(trainID, trainType);
+    }
+
+    addTrain(trainID: string, type: string): void {
+        let train: Train;
+
+        switch (type) {
+            case 'small':
+                train = new SmallTrain(trainID);
+                break;
+            case 'large':
+                train = new LargeTrain(trainID);
+                break;
+            default:
+                log("Invalid train type.", 'bgRed');
+                return;
+        }
+
+        this.terminal.addTrain(train);
+        log(`\nAdded a ${type} train.`, 'bgGreen')
+        log(`\n\nTrain ID: ${train.getID()}`)
+        log(`\n${train.toString()}`);
     }
 
     async parkVehicleInteractive(): Promise<void> {
@@ -39,40 +66,15 @@ export default class CommandHandler {
         const indexStr = await this.askQuestion("Enter the index number of the train to park the vehicle: ");
         const trainIndex = parseInt(indexStr, 10) - 1; // Convert to zero-based index
         if (isNaN(trainIndex)) {
-            console.log(chalk.red("Invalid train index."));
+            log(chalk.red("Invalid train index."));
             return this.parkVehicleInteractive(); // Re-prompt if invalid
         }
         this.parkVehicle(vehicleType, trainIndex);
     }
 
-    askQuestion(query: string): Promise<string> {
-        return new Promise(resolve => {
-            this.rl.question(chalk.green(query), (input) => resolve(input));
-        });
-    }
-
-    addTrain(type: string): void {
-        let train: Train;
-
-        switch (type) {
-            case 'small':
-                train = new SmallTrain();
-                break;
-            case 'large':
-                train = new LargeTrain();
-                break;
-            default:
-                console.log(chalk.bgRed("Invalid train type."));
-                return;
-        }
-
-        this.terminal.addTrain(train);
-        console.log(chalk.bgGreen(`Added a ${type} train.`));
-    }
-
     parkVehicle(type: string, trainIndex: number): void {
         if (trainIndex < 0 || trainIndex >= this.terminal.getTrains().length) {
-            console.log(chalk.red("Invalid train index."));
+            log(chalk.red("Invalid train index."));
             return;
         }
     
@@ -81,7 +83,7 @@ export default class CommandHandler {
     
         if ((train instanceof SmallTrain && (type === 'bus' || type === 'truck')) ||
             (train instanceof LargeTrain && (type === 'car' || type === 'van'))) {
-            console.log(chalk.red("Vehicle type is incompatible with the selected train."));
+            log("Vehicle type is incompatible with the selected train.", 'red');
             return;
         }
     
@@ -99,19 +101,18 @@ export default class CommandHandler {
                 vehicle = new Truck();
                 break;
             default:
-                console.log(chalk.red("Invalid vehicle type."));
+                log(chalk.red("Invalid vehicle type."));
                 return;
         }
     
         const success = train.addVehicle(vehicle);
         if (success) {
-            console.log(chalk.green(`Parked a ${type} in train #${trainIndex + 1}.`));
+            log(`Parked a ${type} in train #${trainIndex + 1}.`);
         } else {
-            console.log(chalk.red("Failed to park vehicle: Train is full or incompatible."));
+            log("Failed to park vehicle: Train is full or incompatible.", 'red');
         }
     }
     
-
     calculateRevenue(): void {
         log(chalk.green(`Total Revenue: ${this.terminal.calculateTotalRevenue()}`));
     }
@@ -156,7 +157,7 @@ export default class CommandHandler {
         const index = parseInt(employeeIndex, 10) - 1;
 
         if (isNaN(index) || index < 0 || index >= this.terminal.getEmployees().length) {
-            console.log(chalk.red("Invalid employee index."));
+            log(chalk.red("Invalid employee index."));
             this.calculateEmployeeSalaryInteractive(); // Re-prompt if invalid
         } else {
             const employee = this.terminal.getEmployees()[index];
@@ -164,7 +165,7 @@ export default class CommandHandler {
             this.terminal.getTrains().forEach(train => {
                 totalSalary += employee.calculateSalary(train);
             });
-            console.log(chalk.green(`Salary for ${employee.toString()}: ${totalSalary}`));
+            log(chalk.green(`Salary for ${employee.toString()}: ${totalSalary}`));
         }
 
     }

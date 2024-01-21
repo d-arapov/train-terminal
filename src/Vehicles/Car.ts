@@ -1,6 +1,10 @@
 import Vehicle from "./Vehicle.js";
+import Refuelable from "../Refuelable/Refuelable.js";
+import Chargeable from "../Chargable/Chargeable.js";
 
-export default class Car extends Vehicle {
+import log from '../logger.js';
+
+export default class Car extends Vehicle implements Refuelable, Chargeable {
 
     constructor() {
         super(Math.random() * 100, Math.random() * 100);
@@ -10,14 +14,14 @@ export default class Car extends Vehicle {
 
     refuelGas(): void {
         if (this.gasLevel < 10) {
-            console.log("Refueling car gas...");
+            log("Refueling car gas...");
             this.gasLevel = 100;
         }
     }
     
     chargeBattery(): void {
         if (this.batteryLevel < 10) {
-            console.log("Recharging car battery...");
+            log("Recharging car battery...");
             this.batteryLevel = 100;
         }
     }

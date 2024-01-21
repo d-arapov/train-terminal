@@ -4,6 +4,4 @@ export default abstract class Vehicle {
     }
 
     abstract getTicketPrice(): number;
-    abstract refuelGas(): void;
-    abstract chargeBattery(): void;
 }
