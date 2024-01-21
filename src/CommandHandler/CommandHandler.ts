@@ -75,9 +75,16 @@ export default class CommandHandler {
             console.log(chalk.red("Invalid train index."));
             return;
         }
-
+    
+        const train = this.terminal.getTrains()[trainIndex];
         let vehicle: Vehicle;
-
+    
+        if ((train instanceof SmallTrain && (type === 'bus' || type === 'truck')) ||
+            (train instanceof LargeTrain && (type === 'car' || type === 'van'))) {
+            console.log(chalk.red("Vehicle type is incompatible with the selected train."));
+            return;
+        }
+    
         switch (type) {
             case 'car':
                 vehicle = new Car();
@@ -95,8 +102,7 @@ export default class CommandHandler {
                 console.log(chalk.red("Invalid vehicle type."));
                 return;
         }
-
-        const train = this.terminal.getTrains()[trainIndex];
+    
         const success = train.addVehicle(vehicle);
         if (success) {
             console.log(chalk.green(`Parked a ${type} in train #${trainIndex + 1}.`));
@@ -104,6 +110,7 @@ export default class CommandHandler {
             console.log(chalk.red("Failed to park vehicle: Train is full or incompatible."));
         }
     }
+    
 
     calculateRevenue(): void {
         log(chalk.green(`Total Revenue: ${this.terminal.calculateTotalRevenue()}`));
