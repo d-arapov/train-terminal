@@ -17,7 +17,7 @@ export default class SmallTrain extends Train {
         return `
    O O o o o...  _______  _______ 
    O     ____   |       ||       |   
-  ][_n_i_| (    |       ||       |   
+  ][_n_i_|  (   |       ||       |   
  (__________|_[_|_______||_______|
    0--0--0        0   0    0   0  
    `

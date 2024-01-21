@@ -13,6 +13,10 @@ export default abstract class Train {
         return this.trainID;
     }
 
+    getVehicleLength(): number {
+        return this.vehicles.length;
+    }
+
     abstract addVehicle(vehicle: Vehicle): boolean;
 
     calculateRevenue(): number {

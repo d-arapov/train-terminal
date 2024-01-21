@@ -34,6 +34,10 @@ export default class CommandHandler {
         });
     }
 
+    getAllTrains(): Train[] {
+        return this.terminal.getTrains();
+    }
+
     async addTrainInteractive(): Promise<void> {
         const trainType = await this.askQuestion("Enter train type (small/large): ");
         const trainID = await this.askQuestion("Enter train ID: ");
@@ -79,6 +83,7 @@ export default class CommandHandler {
         }
     
         const train = this.terminal.getTrains()[trainIndex];
+        console.log(train)
         let vehicle: Vehicle;
     
         if ((train instanceof SmallTrain && (type === 'bus' || type === 'truck')) ||

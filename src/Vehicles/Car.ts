@@ -18,11 +18,22 @@ export default class Car extends Vehicle implements Refuelable, Chargeable {
             this.gasLevel = 100;
         }
     }
-    
+
     chargeBattery(): void {
         if (this.batteryLevel < 10) {
             log("Recharging car battery...");
             this.batteryLevel = 100;
         }
+    }
+
+    toString(): string {
+        return `
+        _______
+       //  ||\ \
+ _____//___||_\ \___
+ )  _          _    \
+ |_/ \________/ \___|
+   \_/        \_/
+        `
     }
 }

@@ -59,8 +59,7 @@ const trainMenu = (commandHandler: CommandHandler) => {
                 // commandHandler.removeTrain().then(() => employeeMenu(commandHandler));
                 break;
             case '3':
-                commandHandler.getAllEmployees();
-                employeeMenu(commandHandler);
+                commandHandler.getAllTrains();
                 break;
             case '4':
                 mainMenu(commandHandler);
@@ -81,7 +80,7 @@ const vehicleMenu = (commandHandler: CommandHandler) => {
 
 const mainMenu = (commandHandler: CommandHandler) => {
     log(chalk.bgBlue(`\n--- Terminal ${commandHandler.getTerminal().getLocation()} - Management ---`));
-    log(chalk.blue("1. Add Train\n2. Park Vehicle\n3. Calculate Revenue\n4. Employee Options\n5. Exit"));
+    log(chalk.blue("1. Add Train\n2. Park Vehicle\n3. Calculate Revenue\n4. Train Options\n5. Employee Options\n6. Exit"));
 
     commandHandler.askQuestion("Choose an action: ").then(choice => {
         switch (choice) {
@@ -96,9 +95,12 @@ const mainMenu = (commandHandler: CommandHandler) => {
                 mainMenu(commandHandler);
                 break;
             case '4':
-                employeeMenu(commandHandler);
+                trainMenu(commandHandler);
                 break;
             case '5':
+                employeeMenu(commandHandler);
+                break;
+            case '6':
                 commandHandler.close();
                 break;
             default:
