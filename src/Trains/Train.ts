@@ -9,8 +9,4 @@ export default abstract class Train {
     calculateRevenue(): number {
         return this.vehicles.reduce((sum, vehicle) => sum + vehicle.getTicketPrice(), 0);
     }
-
-    refuelOrRechargeVehicles(): void {
-        this.vehicles.forEach(vehicle => vehicle.refuelOrRecharge());
-    }
 }
