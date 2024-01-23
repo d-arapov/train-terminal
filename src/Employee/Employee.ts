@@ -16,7 +16,6 @@ export default class Employee {
         let success = train.addVehicle(vehicle);
         if (success) {
             log(`Vehicle parked in ${train.constructor.name}.`);
-            // vehicle.refuelOrRecharge();
             log(`Current vehicle gas level: ${vehicle.gasLevel}%`);
             log(`Current vehicle battery level: ${vehicle.batteryLevel}%`);
         } else {
